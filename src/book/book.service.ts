@@ -7,13 +7,15 @@ import { Model } from 'mongoose';
 @Injectable()
 export class BookService {
   constructor(@InjectModel('Book') private readonly BookModel: Model<Book>) {}
-  books: CreateBookDto[] = [];
-  getBook() {
-    return this.books;
+
+  async getBook() {
+    return await this.BookModel.find().exec();
   }
 
-  createBook(createBook: CreateBookDto) {
-    this.books.push(createBook);
-    return createBook;
+  async createBook(createBook: CreateBookDto) {
+    const newBook = new this.BookModel({
+      title: createBook.title,
+    });
+    return await newBook.save();
   }
 }
