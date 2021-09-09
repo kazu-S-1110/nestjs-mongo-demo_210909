@@ -8,8 +8,12 @@ import { Model } from 'mongoose';
 export class BookService {
   constructor(@InjectModel('Book') private readonly BookModel: Model<Book>) {}
 
-  async getBook() {
+  async getBookAll() {
     return await this.BookModel.find().exec();
+  }
+  async getBookById(id: string) {
+    const book = await this.BookModel.findById(id).exec();
+    return book;
   }
 
   async createBook(createBook: CreateBookDto) {
