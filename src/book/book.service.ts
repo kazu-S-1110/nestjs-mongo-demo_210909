@@ -1,5 +1,5 @@
 import { Book } from './interfaces/book.interface';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateBookDto } from './dto/createBook.dto';
 import { Model } from 'mongoose';
@@ -12,8 +12,7 @@ export class BookService {
     return await this.BookModel.find().exec();
   }
   async getBookById(id: string) {
-    const book = await this.BookModel.findById(id).exec();
-    return book;
+    return await this.BookModel.findById(id).exec();
   }
 
   async createBook(createBook: CreateBookDto) {
@@ -21,5 +20,13 @@ export class BookService {
       title: createBook.title,
     });
     return await newBook.save();
+  }
+
+  async updateBook(updateBook: CreateBookDto, id: string) {
+    const newBook = await this.BookModel.findByIdAndUpdate(id, updateBook);
+    if (!newBook) {
+      throw new NotFoundException(`${id}なんてものは見つからんわぼけ！`);
+    }
+    return newBook;
   }
 }
