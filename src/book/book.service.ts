@@ -1,5 +1,5 @@
 import { Book } from './interfaces/book.interface';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Param } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateBookDto } from './dto/createBook.dto';
 import { Model } from 'mongoose';
@@ -28,5 +28,8 @@ export class BookService {
       throw new NotFoundException(`${id}なんてものは見つからんわぼけ！`);
     }
     return newBook;
+  }
+  async deleteBook(@Param('id') id) {
+    await this.BookModel.findOneAndRemove(id);
   }
 }

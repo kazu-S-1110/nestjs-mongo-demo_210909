@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   NotFoundException,
@@ -47,6 +48,20 @@ export class BookController {
     } catch (err) {
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: 'Error: Book not updated!',
+        status: 400,
+      });
+    }
+  }
+  @Delete('/:id')
+  async deleteBook(@Res() res, @Param('id') id: string) {
+    try {
+      await this.bookService.deleteBook(id);
+      return res.status(HttpStatus.OK).json({
+        message: 'The Book has been successfully deleted!',
+      });
+    } catch (err) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'Error: Book not deleted!',
         status: 400,
       });
     }
