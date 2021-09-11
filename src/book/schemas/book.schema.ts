@@ -6,4 +6,27 @@ export const BookSchema = new mongoose.Schema({
     required: true,
     index: { unique: true },
   },
+  model: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+  },
+  userName: {
+    type: String,
+  },
+  userNum: {
+    type: String,
+  },
+  userBelongto: {
+    type: String,
+  },
+  destination: {
+    type: String,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
 });

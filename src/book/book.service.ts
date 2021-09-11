@@ -1,5 +1,11 @@
 import { Book } from './interfaces/book.interface';
-import { Injectable, NotFoundException, Param } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+  Param,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateBookDto } from './dto/createBook.dto';
 import { Model } from 'mongoose';
@@ -16,10 +22,21 @@ export class BookService {
   }
 
   async createBook(createBook: CreateBookDto) {
-    const newBook = new this.BookModel({
-      title: createBook.title,
-    });
-    return await newBook.save();
+    if (!createBook.userNum && createBook.userName) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'input userNum',
+        },
+        404,
+      );
+    } else {
+      const newBook = new this.BookModel({
+        title: createBook.title,
+        model: createBook.model,
+      });
+      return await newBook.save();
+    }
   }
 
   async updateBook(updateBook: CreateBookDto, id: string) {
