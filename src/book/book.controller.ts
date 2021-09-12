@@ -66,4 +66,18 @@ export class BookController {
       });
     }
   }
+  @Delete('all')
+  async deleteAll(@Res() res) {
+    try {
+      await this.bookService.deleteAll();
+      return res.status(HttpStatus.OK).json({
+        message: 'Success Delete ALL',
+      });
+    } catch (err) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'Error: Book not deleted!',
+        status: 400,
+      });
+    }
+  }
 }

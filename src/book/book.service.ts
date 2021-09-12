@@ -49,4 +49,7 @@ export class BookService {
   async deleteBook(@Param('id') id) {
     await this.BookModel.findOneAndRemove(id);
   }
+  async deleteAll() {
+    await this.BookModel.deleteMany();
+  }
 }
