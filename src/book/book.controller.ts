@@ -66,7 +66,7 @@ export class BookController {
       });
     }
   }
-  @Delete('all')
+  @Delete('')
   async deleteAll(@Res() res) {
     try {
       await this.bookService.deleteAll();

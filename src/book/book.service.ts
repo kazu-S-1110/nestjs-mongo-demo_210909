@@ -50,6 +50,6 @@ export class BookService {
     await this.BookModel.findOneAndRemove(id);
   }
   async deleteAll() {
-    await this.BookModel.deleteMany();
+    await this.BookModel.remove({});
   }
 }
