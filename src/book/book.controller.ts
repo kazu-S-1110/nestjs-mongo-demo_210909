@@ -58,6 +58,7 @@ export class BookController {
       await this.bookService.deleteBook(id);
       return res.status(HttpStatus.OK).json({
         message: 'The Book has been successfully deleted!',
+        id: id,
       });
     } catch (err) {
       return res.status(HttpStatus.BAD_REQUEST).json({
