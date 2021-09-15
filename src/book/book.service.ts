@@ -47,7 +47,7 @@ export class BookService {
     return newBook;
   }
   async deleteBook(@Param('id') id) {
-    await this.BookModel.findOneAndRemove(id);
+    await this.BookModel.findOneAndRemove({ _id: id });
   }
   async deleteAll() {
     await this.BookModel.remove({});
