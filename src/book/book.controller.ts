@@ -38,12 +38,10 @@ export class BookController {
   ) {
     try {
       const newBook = await this.bookService.updateBook(updateBook, id);
-      if (!newBook) {
-        throw new NotFoundException('That Book does not exist!');
-      }
-      return res.status(HttpStatus.OK).json({
+      console.log(newBook);
+      return await res.status(HttpStatus.OK).json({
         message: 'The Book has been successfully updated',
-        newBook,
+        newBook: newBook,
       });
     } catch (err) {
       return res.status(HttpStatus.BAD_REQUEST).json({

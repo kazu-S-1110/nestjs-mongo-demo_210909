@@ -40,11 +40,9 @@ export class BookService {
   }
 
   async updateBook(updateBook: CreateBookDto, id: string) {
-    const newBook = await this.BookModel.findByIdAndUpdate(id, updateBook);
-    if (!newBook) {
-      throw new NotFoundException(`${id}なんてものは見つからんわぼけ！`);
-    }
-    return newBook;
+    return await this.BookModel.findByIdAndUpdate({ _id: id }, updateBook, {
+      returnOriginal: false,
+    });
   }
   async deleteBook(@Param('id') id) {
     await this.BookModel.findOneAndRemove({ _id: id });
